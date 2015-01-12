@@ -1219,7 +1219,7 @@ if(timeout) {
                     inputLength = progressEvent.total || progressEvent.totalSize || 0;
                     uploadProgress(0);
                 }
-                uploadProgress(progressEvent.loaded || progressEvent.position || 0);
+                uploadProgress(progressEvent.loaded || 0);
             }
         };
         if('upload' in xhr) {
@@ -1247,11 +1247,11 @@ if(timeout) {
         var ondownloadprogress = function(progressEvent) {
             onHeadersReceived(false);
             // There is a bug in Chrome 10 on 206 response with Content-Range=0-4/12 - total must be 5
-            // 'total', 12, 'totalSize', 12, 'loaded', 5, 'position', 5, 'lengthComputable', true, 'status', 206
-            // console.log('total', progressEvent.total, 'totalSize', progressEvent.totalSize, 'loaded', progressEvent.loaded, 'position', progressEvent.position, 'lengthComputable', progressEvent.lengthComputable, 'status', status);
+            // 'total', 12, 'totalSize', 12, 'loaded', 5, 'lengthComputable', true, 'status', 206
+            // console.log('total', progressEvent.total, 'totalSize', progressEvent.totalSize, 'loaded', progressEvent.loaded, 'lengthComputable', progressEvent.lengthComputable, 'status', status);
             // httpinvoke does not work around this bug, because Chrome 10 is practically not used at all, as Chrome agressively auto-updates itself to latest version
             try {
-                var current = progressEvent.loaded || progressEvent.position || 0;
+                var current = progressEvent.loaded || 0;
                 if(progressEvent.lengthComputable) {
                     outputLength = progressEvent.total || progressEvent.totalSize || 0;
                 }
